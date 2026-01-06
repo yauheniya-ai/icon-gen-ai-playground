@@ -8,6 +8,20 @@
 
 A web-based interface to explore and test the full functionality of the **icon-gen-ai** Python package. Generate custom icons from Iconify, direct URLs, or local files with real-time preview.
 
+## Main Interface
+
+### Screenshots
+Split-screen design with input preview on the left and customization options with output preview on the right.
+
+<div align="center">
+  <img src="./Screenshot.png" width="100%" alt="Interface">
+</div>
+
+### Live Demo
+
+**Try it now:** [https://yauheniya-ai.github.io/icon-gen-ai-playground/](https://yauheniya-ai.github.io/icon-gen-ai-playground/)
+
+
 ## Features
 
 ### Input Sources
@@ -28,10 +42,6 @@ A web-based interface to explore and test the full functionality of the **icon-g
 - **Download** - Export your custom icons as svg, png, webp, or ico
 - **Responsive Design** - Works on desktop and mobile
 
-## Live Demo
-
-**Try it now:** [https://yauheniya-ai.github.io/icon-gen-ai-playground/](https://yauheniya-ai.github.io/icon-gen-ai-playground/)
-
 ## PyPI Package
 
 This playground showcases the **icon-gen-ai** Python package:
@@ -41,15 +51,6 @@ pip install icon-gen-ai
 ```
 
 **Package Repository:** [github.com/yauheniya-ai/icon-gen-ai](https://github.com/yauheniya-ai/icon-gen-ai)
-
-## Screenshots
-
-### Main Interface
-Split-screen design with input preview on the left and customization options with output preview on the right.
-
-<div align="center">
-  <img src="./Screenshot.png" width="100%" alt="Interface">
-</div>
 
 ### Example Use Cases
 - Generate company logos with custom backgrounds
@@ -68,12 +69,11 @@ Split-screen design with input preview on the left and customization options wit
 
 **Backend:**
 - FastAPI
-- icon-gen-ai (PyPI)
-- Hosted on [Hugging Face Spaces](https://huggingface.co/spaces/yauheniya/icon-gen-ai-api)
+- icon-gen-ai (PyPI)    
 
 **Deployment:**
 - Frontend: GitHub Pages
-- Backend: Hugging Face Spaces (Docker)
+- Backend: [Hugging Face Spaces](https://huggingface.co/spaces/yauheniya/icon-gen-ai-api) (Docker)
 
 ## Local Development
 
