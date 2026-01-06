@@ -12,17 +12,41 @@ function App() {
   const [config, setConfig] = useState({
     color: 'white',
     colorGradient: false,
+    iconGradientDirection: "horizontal", 
     color1: '#7B68EE',
     color2: '#FF1493',
     size: 256,
     bg_color: '',
     bgGradient: false,
+    bgGradientDirection: "horizontal",
     bg_color1: '#7B68EE',
     bg_color2: '#FF1493',
     border_radius: 0,
     outline_width: 0,
     outline_color: ''
   });
+
+  const gradientDirections = [
+    { value: "horizontal", symbol: "→" },
+    { value: "vertical", symbol: "↓" },
+    { value: "diagonal", symbol: "↘" },
+  ];
+
+  const cycleIconGradientDirection = () => {
+    const index = gradientDirections.findIndex(
+      d => d.value === config.iconGradientDirection
+    );
+    const next = gradientDirections[(index + 1) % gradientDirections.length];
+    setConfig({ ...config, iconGradientDirection: next.value });
+  };
+
+  const cycleBgGradientDirection = () => {
+    const index = gradientDirections.findIndex(
+      d => d.value === config.bgGradientDirection
+    );
+    const next = gradientDirections[(index + 1) % gradientDirections.length];
+    setConfig({ ...config, bgGradientDirection: next.value });
+  }; 
   
   const [outputPreview, setOutputPreview] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -73,15 +97,21 @@ function App() {
       formData.append('size', config.size);
 
       if (config.colorGradient) {
-        formData.append('color', `(${config.color1},${config.color2})`);
-      } else if (config.color) {
-        formData.append('color', config.color);
+        // Send color as gradient string
+        formData.append("color", `(${config.color1},${config.color2})`);
+        // Send direction explicitly
+        formData.append("color_direction", config.iconGradientDirection || "horizontal");
+      } else {
+        // Always send a solid color
+        formData.append("color", config.color || "white");
       }
 
+      // Background color
       if (config.bgGradient) {
-        formData.append('bg_color', `(${config.bg_color1},${config.bg_color2})`);
+        formData.append("bg_color", `(${config.bg_color1},${config.bg_color2})`);
+        formData.append("bg_direction", config.bgGradientDirection || "horizontal");
       } else if (config.bg_color) {
-        formData.append('bg_color', config.bg_color);
+        formData.append("bg_color", config.bg_color);
       }
 
       if (config.border_radius > 0) {
@@ -303,7 +333,30 @@ function App() {
                   setConfig({ ...config, colorGradient: e.target.checked })
                 }
               />
-              <span>Gradient</span>
+              <span>
+                Gradient
+                {config.colorGradient && (
+                  <span className="gradient-direction">
+                    {" "}(
+                    direction{" "}
+                    <span
+                      className="direction-toggle"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        cycleIconGradientDirection();
+                      }}
+                    >
+                      {
+                        gradientDirections.find(
+                          d => d.value === config.iconGradientDirection
+                        )?.symbol
+                      }
+                    </span>
+                    )
+                  </span>
+                )}
+              </span>
             </label>
           </div>
 
@@ -317,7 +370,13 @@ function App() {
                   setConfig({ ...config, color1: e.target.value })
                 }
               />
-              <span>→</span>
+              <span>
+                {
+                  gradientDirections.find(
+                    (d) => d.value === config.iconGradientDirection
+                  )?.symbol
+                }
+              </span>
               <input
                 type="text"
                 placeholder="#FF1493"
@@ -365,7 +424,30 @@ function App() {
                     setConfig({ ...config, bgGradient: e.target.checked })
                   }
                 />
-                <span>Gradient</span>
+                <span>
+                  Gradient
+                  {config.bgGradient && (
+                    <span className="gradient-direction">
+                      {" "}(
+                      direction{" "}
+                      <span
+                        className="direction-toggle"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          cycleBgGradientDirection();
+                        }}
+                      >
+                        {
+                          gradientDirections.find(
+                            d => d.value === config.bgGradientDirection
+                          )?.symbol
+                        }
+                      </span>
+                      )
+                    </span>
+                  )}
+                </span>
               </label>
             </div>
 
@@ -379,7 +461,13 @@ function App() {
                     setConfig({ ...config, bg_color1: e.target.value })
                   }
                 />
-                <span>→</span>
+                <span>
+                  {
+                    gradientDirections.find(
+                      (d) => d.value === config.bgGradientDirection
+                    )?.symbol
+                  }
+                </span>
                 <input
                   type="text"
                   placeholder="#FF1493"
