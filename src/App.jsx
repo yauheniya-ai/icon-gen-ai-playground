@@ -100,7 +100,7 @@ function App() {
         // Send color as gradient string
         formData.append("color", `(${config.color1},${config.color2})`);
         // Send direction explicitly
-        formData.append("color_direction", config.iconGradientDirection || "horizontal");
+        formData.append("direction", config.iconGradientDirection || "horizontal");
       } else {
         // Always send a solid color
         formData.append("color", config.color || "white");
@@ -198,11 +198,25 @@ function App() {
         if (config.outline_color) formData.append('outline_color', config.outline_color);
         
         // colors
-        formData.append('color', config.colorGradient ? `(${config.color1},${config.color2})` : config.color);
-        formData.append('bg_color', config.bgGradient ? `(${config.bg_color1},${config.bg_color2})` : config.bg_color);
+        formData.append(
+          "color",
+          config.colorGradient
+            ? `(${config.color1},${config.color2})`
+            : config.color
+        );
 
-        // specify format
-        formData.append('format', 'ico');
+        formData.append(
+          "bg_color",
+          config.bgGradient
+            ? `(${config.bg_color1},${config.bg_color2})`
+            : config.bg_color
+        );
+
+        formData.append("direction", config.iconGradientDirection || "horizontal");
+        formData.append("bg_direction", config.bgGradientDirection || "horizontal");
+
+        // format
+        formData.append("format", "ico");
 
         const blob = await generateIcon(formData);
         const url = URL.createObjectURL(blob);
