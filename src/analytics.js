@@ -6,5 +6,6 @@ export function trackIconDownload({ format, inputType, size, hasBg }) {
     icon_source: inputType, // iconify | url | upload
     size: size,
     has_bg: hasBg,
+    event_category: "icon_download",
   });
 }
