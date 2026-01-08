@@ -5,21 +5,25 @@
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://yourusername.github.io/icon-gen-ai-playground/)
 [![PyPI Package](https://img.shields.io/badge/PyPI-icon--gen--ai-blue)](https://pypi.org/project/icon-gen-ai/)
 [![API](https://img.shields.io/badge/API-Hugging%20Face-yellow)](https://huggingface.co/spaces/yauheniya/icon-gen-ai-api)
+[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](LICENSE)
 
 A web-based interface to explore and test the full functionality of the **icon-gen-ai** Python package. Generate custom icons from Iconify, direct URLs, or local files with real-time preview.
 
 ## Main Interface
 
-### Screenshots
-Split-screen design with input preview on the left and customization options with output preview on the right.
-
-<div align="center">
-  <img src="./Screenshot.png" width="100%" alt="Interface">
-</div>
-
 ### Live Demo
 
 **Try it now:** [https://yauheniya-ai.github.io/icon-gen-ai-playground/](https://yauheniya-ai.github.io/icon-gen-ai-playground/)
+
+### Screen Recording
+Split-screen design with input preview on the left and customization options with immediate generation and output preview on the right. Download in four different formats: SVG, PNG, WebP, ICO.
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/yauheniya-ai/icon-gen-ai/main/docs/screen_recording_icon_gen_ai.webp" width="100%" alt="Interface">
+  <br><sub>
+  <a href="https://yauheniya-ai.github.io/icon-gen-ai/">Read the Package Documentation</a> • <a href="https://yauheniya-ai.github.io/icon-gen-ai-playground/">Try the Interactive Playground</a>
+  </sub>
+</div>
 
 
 ## Features
@@ -61,19 +65,19 @@ pip install icon-gen-ai
 
 ## Tech Stack
 
-**Frontend:**
-- React 19
-- Vite 7
-- Axios
-- CSS3
+### Frontend
+- <img src="https://api.iconify.design/logos/react.svg" width="16" height="16" /> React 19
+- <img src="https://api.iconify.design/devicon/vitejs.svg" width="16" height="16" /> Vite 7
+- <img src="https://api.iconify.design/simple-icons/axios.svg" width="16" height="16" /> Axios
+- <img src="https://api.iconify.design/devicon/css3.svg" width="16" height="16" /> CSS3
 
-**Backend:**
-- FastAPI
-- icon-gen-ai (PyPI)    
+### Backend
+- <img src="https://api.iconify.design/devicon/fastapi.svg" width="16" height="16" /> FastAPI
+- <img src="https://api.iconify.design/devicon/pypi.svg" width="16" height="16" /> icon-gen-ai (PyPI)
 
-**Deployment:**
-- Frontend: GitHub Pages
-- Backend: [Hugging Face Spaces](https://huggingface.co/spaces/yauheniya/icon-gen-ai-api) (Docker)
+### Deployment
+- <img src="https://api.iconify.design/mdi/github.svg" width="16" height="16" /> Frontend: GitHub Pages
+- <img src="https://api.iconify.design/devicon/huggingface.svg" width="16" height="16" /> Backend: Hugging Face Spaces (Docker)
 
 ## Local Development
 
@@ -136,6 +140,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Iconify** - Comprehensive icon collection
 - **FastAPI** - Backend framework
 - **Hugging Face** - Free API hosting
+
+## Privacy Notice
+
+The playground uses Google Analytics to collect anonymous usage statistics (e.g. page views, interactions) to help improve the tool. No personally identifiable information is collected. IP addresses are anonymized and data is not used for advertising. By using the playground, you consent to the use of Google Analytics.
 
 ## Contact
 

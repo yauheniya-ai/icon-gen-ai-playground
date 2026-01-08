@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { generateIcon } from './api';
+import { trackIconDownload } from "./analytics";
+
 import './App.css';
 
 function App() {
@@ -139,6 +141,13 @@ function App() {
 
   const downloadIcon = async (format) => {
     if (!outputPreview) return;
+
+    trackIconDownload({
+      format,
+      inputType,
+      size: config.size,
+      hasBg: config.bgGradient || !!config.bg_color,
+    });
 
     // SVG, PNG, WEBP use the preview directly
     if (format === 'svg') {
