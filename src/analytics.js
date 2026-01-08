@@ -7,5 +7,6 @@ export function trackIconDownload({ format, inputType, size, hasBg }) {
     size: size,
     has_bg: hasBg,
     event_category: "icon_download",
+    transport_type: "beacon",
   });
 }
