@@ -106,6 +106,14 @@ header p {
   font-size: 1rem;
   transition: border-color 0.2s;
 }
+.section select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d2d2d7;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
 
 .section input[type="text"]:focus,
 .section input[type="url"]:focus,
