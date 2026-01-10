@@ -54,6 +54,15 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // JPEG/JPG cannot change icon color
+  const isJpegInput =
+    (inputType === 'upload' &&
+      uploadedFile &&
+      ['image/jpeg', 'image/jpg'].includes(uploadedFile.type)) ||
+    (inputType === 'url' &&
+      directUrl &&
+      /\.(jpe?g)(\?|$)/i.test(directUrl));
+
   // Load input preview
   useEffect(() => {
     const loadInputPreview = async () => {
@@ -72,16 +81,35 @@ function App() {
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
-    if (file && (file.type === 'image/svg+xml' || file.type === 'image/png')) {
+    if (file && (
+      file.type === 'image/svg+xml' || 
+      file.type === 'image/png' || 
+      file.type === 'image/webp' || 
+      file.type === 'image/jpeg' || 
+      file.type === 'image/jpg'
+    )) {
       setUploadedFile(file);
     } else {
-      setError('Please upload SVG or PNG file');
+      setError('Please upload SVG, PNG, WebP, or JPEG file');
     }
   };
 
   const handleGenerate = async () => {
     setLoading(true);
     setError('');
+
+    // Block icon color change ONLY for JPEG/JPG
+    if (
+      isJpegInput &&
+      (config.colorGradient || config.color !== 'white')
+    ) {
+      setError(
+        'JPEG/JPG icons cannot change icon color. Background color is still supported.'
+      );
+      setLoading(false);
+      return;
+    }
+
 
     try {
       const formData = new FormData();
@@ -98,14 +126,16 @@ function App() {
       // styling options
       formData.append('size', config.size);
 
-      if (config.colorGradient) {
-        // Send color as gradient string
-        formData.append("color", `(${config.color1},${config.color2})`);
-        // Send direction explicitly
-        formData.append("direction", config.iconGradientDirection || "horizontal");
-      } else {
-        // Always send a solid color
-        formData.append("color", config.color || "white");
+      if (!isJpegInput) {
+        if (config.colorGradient) {
+          // Send color as gradient string
+          formData.append("color", `(${config.color1},${config.color2})`);
+          // Send direction explicitly
+          formData.append("direction", config.iconGradientDirection || "horizontal");
+        } else {
+          // Always send a solid color
+          formData.append("color", config.color || "white");
+        }
       }
 
       // Background color
@@ -207,12 +237,14 @@ function App() {
         if (config.outline_color) formData.append('outline_color', config.outline_color);
         
         // colors
-        formData.append(
-          "color",
-          config.colorGradient
-            ? `(${config.color1},${config.color2})`
-            : config.color
-        );
+        if (!isJpegInput) {
+          formData.append(
+            "color",
+            config.colorGradient
+              ? `(${config.color1},${config.color2})`
+              : config.color
+          );
+        }
 
         formData.append(
           "bg_color",
@@ -320,10 +352,10 @@ function App() {
 
           {inputType === 'upload' && (
             <div className="section">
-              <label>Upload File (PNG or SVG)</label>
+              <label>Upload File (SVG, PNG, WebP, or JPEG)</label>
               <input
                 type="file"
-                accept=".svg,.png,image/svg+xml,image/png"
+                accept=".svg,.png,.webp,.jpg,.jpeg,image/svg+xml,image/png,image/webp,image/jpeg"
                 onChange={handleFileUpload}
               />
             </div>
