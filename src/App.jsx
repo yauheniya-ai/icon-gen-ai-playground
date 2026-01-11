@@ -99,8 +99,8 @@ function App() {
         if (config.colorGradient) {
           formData.append("color", `(${config.color1},${config.color2})`);
           formData.append("direction", config.iconGradientDirection || "horizontal");
-        } else {
-          formData.append("color", config.color || "white");
+        } else if (config.color && config.color.trim() !== '') {
+          formData.append("color", config.color);
         }
       }
       if (config.bgGradient) {
@@ -147,6 +147,53 @@ function App() {
       return;
     }
     if (format === 'png' || format === 'webp') {
+      // If animated and requesting WebP, delegate to backend (server-side animated WebP)
+      if (format === 'webp' && config.animationEnabled) {
+        try {
+          const formData = new FormData();
+          if (inputType === 'iconify') {
+            formData.append('icon_name', iconName);
+          } else if (inputType === 'url') {
+            formData.append('direct_url', directUrl);
+          } else if (inputType === 'upload') {
+            formData.append('file', uploadedFile);
+          }
+          formData.append('size', config.size);
+          formData.append('border_radius', config.border_radius);
+          formData.append('outline_width', config.outline_width);
+          if (config.outline_color) formData.append('outline_color', config.outline_color);
+          if (!isJpegInput) {
+            if (config.colorGradient) {
+              formData.append('color', `(${config.color1},${config.color2})`);
+            } else if (config.color && config.color.trim() !== '') {
+              formData.append('color', config.color);
+            }
+          }
+          formData.append(
+            'bg_color',
+            config.bgGradient ? `(${config.bg_color1},${config.bg_color2})` : config.bg_color
+          );
+          formData.append('direction', config.iconGradientDirection || 'horizontal');
+          formData.append('bg_direction', config.bgGradientDirection || 'horizontal');
+          // Pass animation and request server-side webp
+          formData.append('animation', `${config.animationType}:${config.animationDuration}s`);
+          formData.append('format', 'webp');
+
+          const blob = await generateIcon(formData);
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `icon-${Date.now()}.webp`;
+          a.click();
+          URL.revokeObjectURL(url);
+        } catch (err) {
+          console.error('WEBP download error:', err);
+          alert('WEBP download failed');
+        }
+        return;
+      }
+
+      // Static PNG/WebP generation client-side (fallback for non-animated WebP)
       const img = new Image();
       img.crossOrigin = 'anonymous';
       img.src = outputPreview;
@@ -185,12 +232,11 @@ function App() {
         formData.append('outline_width', config.outline_width);
         if (config.outline_color) formData.append('outline_color', config.outline_color);
         if (!isJpegInput) {
-          formData.append(
-            "color",
-            config.colorGradient
-              ? `(${config.color1},${config.color2})`
-              : config.color
-          );
+          if (config.colorGradient) {
+            formData.append("color", `(${config.color1},${config.color2})`);
+          } else if (config.color && config.color.trim() !== '') {
+            formData.append("color", config.color);
+          }
         }
         formData.append(
           "bg_color",
