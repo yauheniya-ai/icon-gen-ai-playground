@@ -245,7 +245,7 @@ header p {
 .generate-btn {
   width: 100%;
   padding: 1rem;
-  background: #0071e3;
+  background: deepskyblue;
   color: white;
   border: none;
   border-radius: 8px;
@@ -303,6 +303,101 @@ header p {
   opacity: 0.7;
   font-size: 0.9em;
   margin-right: 4px;
+}
+
+/* AI Icon Discovery */
+.ai-discovery {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ai-search-box {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.ai-search-box input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #d2d2d7;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.ai-search-box input:focus {
+  outline: none;
+  border-color: deepskyblue;
+}
+
+.ai-search-btn {
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, mediumslateblue 0%, deeppink 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  min-width: 60px;
+}
+
+.ai-search-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.ai-search-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-suggestions {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.suggestion-chip {
+  padding: 0.5rem 0.75rem;
+  background: #f5f5f7;
+  border: 1px solid #d2d2d7;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #1d1d1f;
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+}
+
+.suggestion-chip:hover {
+  background: #0071e3;
+  color: white;
+  border-color: #0071e3;
+  transform: translateY(-1px);
+}
+
+.ai-loading-message {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 8px;
+  color: mediumslateblue;
+  font-size: 0.9rem;
+  text-align: center;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* Error Message */

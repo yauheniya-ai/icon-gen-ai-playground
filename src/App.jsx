@@ -7,8 +7,8 @@ import './App.css';
 
 function App() {
   const [inputType, setInputType] = useState('iconify');
-  const [iconName, setIconName] = useState('simple-icons:openai');
-  const [directUrl, setDirectUrl] = useState('');
+  const [iconName, setIconName] = useState('emojione-monotone:optical-disk');
+  const [directUrl, setDirectUrl] = useState('https://upload.wikimedia.org/wikipedia/commons/f/f6/Builder_icon_hicolor.png');
   const [uploadedFile, setUploadedFile] = useState(null);
   const [inputPreview, setInputPreview] = useState(null);
   const [config, setConfig] = useState({
@@ -28,7 +28,7 @@ function App() {
     outline_color: '',
     animationEnabled: false,
     animationType: 'spin',
-    animationDuration: 2
+    animationDuration: 4
   });
   const [outputPreview, setOutputPreview] = useState(null);
   const [loading, setLoading] = useState(false);

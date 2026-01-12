@@ -13,3 +13,12 @@ export const generateIcon = async (formData) => {
 
   return response.data;
 };
+
+export const discoverIcons = async (query) => {
+  const response = await axios.post(
+    `${API_URL}/discover-icons`,
+    { query }
+  );
+
+  return response.data.suggestions;
+};
