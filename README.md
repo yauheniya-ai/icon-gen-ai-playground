@@ -19,7 +19,7 @@ A web-based interface to explore and test the full functionality of the **icon-g
 Split-screen design with input preview on the left and customization options with immediate generation and output preview on the right. Download in four different formats: SVG, PNG, WebP, ICO.
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/yauheniya-ai/icon-gen-ai/main/docs/screen_recording_icon_gen_ai.webp" width="100%" alt="Interface">
+  <img src="https://raw.githubusercontent.com/yauheniya-ai/icon-gen-ai/main/docs/icon_gen_ai-demo.webp" width="100%" alt="Interface">
   <br><sub>
   <a href="https://yauheniya-ai.github.io/icon-gen-ai/">Read the Package Documentation</a> • <a href="https://yauheniya-ai.github.io/icon-gen-ai-playground/">Try the Interactive Playground</a>
   </sub>
@@ -31,19 +31,21 @@ Split-screen design with input preview on the left and customization options wit
 ### Input Sources
 - **Iconify Icons** - Access 275,000+ icons from [Iconify](https://icon-sets.iconify.design)
 - **Direct URLs** - Fetch icons from any public URL
-- **Local Upload** - Upload your own PNG or SVG files
+- **Local Upload** - Upload your own SVG, PNG, WebP, or JPEG files
 
 ### Customization Options
 - **Icon Color** - Solid colors or gradients
 - **Background** - Solid colors, gradients, or transparent
 - **Size** - Any size from 16px to 512px
 - **Border Radius** - Square, rounded, or circular
-- **Outline** - Add colored outlines with custom width
+- **Outline** - Add colored outlines with custom width  
+- **Animation** - Add spin, pulse, flip-h, and flip-v animations
+- **Download** - Export your custom icons as svg, png, webp, or ico
 
 ### Benefits
 - **Real-time Preview** - See input and output side-by-side
 - **Instant Generation** - Generate icons in seconds
-- **Download** - Export your custom icons as svg, png, webp, or ico
+- **AI Discovery** - Use AI features to search for suitable icon names
 - **Responsive Design** - Works on desktop and mobile
 
 ## PyPI Package
