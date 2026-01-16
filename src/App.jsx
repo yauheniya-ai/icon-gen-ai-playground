@@ -35,20 +35,22 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Track previous background state to detect when it changes
+  // Track previous background state and whether scale was manually changed
   const prevHasBackgroundRef = useRef(false);
+  const scaleManuallyChangedRef = useRef(false);
   
-  // Auto-adjust scale when background is toggled
+  // Auto-adjust scale when background is toggled (only if not manually changed)
   useEffect(() => {
     const hasBackground = config.bgGradient || (config.bg_color && config.bg_color.trim() !== '');
     const prevHasBackground = prevHasBackgroundRef.current;
     
-    // Only adjust scale when background state changes (toggled on/off)
-    if (hasBackground !== prevHasBackground) {
+    // Only adjust scale when background state changes AND scale wasn't manually changed
+    if (hasBackground !== prevHasBackground && !scaleManuallyChangedRef.current) {
       const newScale = hasBackground ? 0.7 : 1.0;
       setConfig(prev => ({ ...prev, scale: newScale }));
-      prevHasBackgroundRef.current = hasBackground;
     }
+    
+    prevHasBackgroundRef.current = hasBackground;
   }, [config.bgGradient, config.bg_color]);
 
   const isJpegInput =
@@ -300,6 +302,7 @@ function App() {
         <OutputPanel
           config={config}
           setConfig={setConfig}
+          scaleManuallyChangedRef={scaleManuallyChangedRef}
           handleGenerate={handleGenerate}
           loading={loading}
           error={error}

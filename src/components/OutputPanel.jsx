@@ -4,6 +4,7 @@ import PreviewBox from './PreviewBox';
 function OutputPanel({
   config,
   setConfig,
+  scaleManuallyChangedRef,
   handleGenerate,
   loading,
   error,
@@ -74,7 +75,10 @@ function OutputPanel({
             max="1.5"
             step="0.1"
             value={config.scale}
-            onChange={(e) => setConfig({...config, scale: parseFloat(e.target.value)})}
+            onChange={(e) => {
+              scaleManuallyChangedRef.current = true;
+              setConfig({...config, scale: parseFloat(e.target.value)});
+            }}
           />
         </div>
       </div>
