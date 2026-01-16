@@ -18,6 +18,7 @@ function App() {
     color1: '#7B68EE',
     color2: '#FF1493',
     size: 256,
+    scale: 1.0,
     bg_color: '',
     bgGradient: false,
     bgGradientDirection: "horizontal",
@@ -95,6 +96,7 @@ function App() {
         formData.append('file', uploadedFile);
       }
       formData.append('size', config.size);
+      formData.append('scale', config.scale);
       if (!isJpegInput) {
         if (config.colorGradient) {
           formData.append("color", `(${config.color1},${config.color2})`);
@@ -159,6 +161,7 @@ function App() {
             formData.append('file', uploadedFile);
           }
           formData.append('size', config.size);
+          formData.append('scale', config.scale);
           formData.append('border_radius', config.border_radius);
           formData.append('outline_width', config.outline_width);
           if (config.outline_color) formData.append('outline_color', config.outline_color);

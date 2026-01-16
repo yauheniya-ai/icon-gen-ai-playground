@@ -55,15 +55,28 @@ function OutputPanel({
         color2Placeholder="#FF1493"
       />
 
-      <div className="section">
-        <label>Size (px)</label>
-        <input
-          type="number"
-          min="16"
-          max="512"
-          value={config.size}
-          onChange={(e) => setConfig({...config, size: parseInt(e.target.value)})}
-        />
+      <div className="section" style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ flex: 1 }}>
+          <label>Size (px)</label>
+          <input
+            type="number"
+            min="16"
+            max="512"
+            value={config.size}
+            onChange={(e) => setConfig({...config, size: parseInt(e.target.value)})}
+          />
+        </div>
+        <div style={{ flex: 1 }}>
+          <label>Scale (factor)</label>
+          <input
+            type="number"
+            min="0.4"
+            max="1.5"
+            step="0.1"
+            value={config.scale}
+            onChange={(e) => setConfig({...config, scale: parseFloat(e.target.value)})}
+          />
+        </div>
       </div>
 
       <ColorControl
