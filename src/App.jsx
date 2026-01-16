@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { generateIcon } from './api';
 import { trackIconDownload } from "./analytics";
 import InputPanel from './components/InputPanel.jsx';
@@ -34,6 +34,22 @@ function App() {
   const [outputPreview, setOutputPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Track previous background state to detect when it changes
+  const prevHasBackgroundRef = useRef(false);
+  
+  // Auto-adjust scale when background is toggled
+  useEffect(() => {
+    const hasBackground = config.bgGradient || (config.bg_color && config.bg_color.trim() !== '');
+    const prevHasBackground = prevHasBackgroundRef.current;
+    
+    // Only adjust scale when background state changes (toggled on/off)
+    if (hasBackground !== prevHasBackground) {
+      const newScale = hasBackground ? 0.7 : 1.0;
+      setConfig(prev => ({ ...prev, scale: newScale }));
+      prevHasBackgroundRef.current = hasBackground;
+    }
+  }, [config.bgGradient, config.bg_color]);
 
   const isJpegInput =
     (inputType === 'upload' &&
