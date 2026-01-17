@@ -52,7 +52,7 @@ function OutputPanel({
         gradientDirection={config.iconGradientDirection}
         onDirectionCycle={cycleIconGradientDirection}
         gradientDirections={gradientDirections}
-        solidPlaceholder="white, #FF0000, dodgerblue"
+        solidPlaceholder="white"
         color1Placeholder="#8B76E9"
         color2Placeholder="#FF1493"
       />
