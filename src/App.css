@@ -174,13 +174,57 @@ header p {
   gap: 0.5rem;
 }
 
-.color-gradient input {
+.color-gradient .color-input-wrapper {
   flex: 1;
 }
 
 .color-gradient span {
   color: #86868b;
   font-weight: 600;
+}
+
+/* Color Input Wrapper with Picker */
+.color-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  flex: 1;
+}
+
+.color-input-wrapper input[type="text"] {
+  flex: 1;
+}
+
+.color-picker {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid #d2d2d7;
+  border-radius: 8px;
+  cursor: pointer;
+  background: none;
+  padding: 2px;
+  transition: border-color 0.2s, transform 0.1s;
+}
+
+.color-picker:hover {
+  border-color: #0071e3;
+  transform: scale(1.05);
+}
+
+.color-picker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-picker::-webkit-color-swatch {
+  border: none;
+  border-radius: 6px;
+}
+
+.color-picker::-moz-color-swatch {
+  border: none;
+  border-radius: 6px;
 }
 
 .direction-toggle {

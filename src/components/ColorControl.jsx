@@ -53,12 +53,21 @@ function ColorControl({
       </div>
       {isGradient ? (
         <div className="color-gradient">
-          <input
-            type="text"
-            placeholder={color1Placeholder}
-            value={color1}
-            onChange={onColor1Change}
-          />
+          <div className="color-input-wrapper">
+            <input
+              type="color"
+              value={color1 || color1Placeholder}
+              onChange={onColor1Change}
+              className="color-picker"
+              title="Pick a color"
+            />
+            <input
+              type="text"
+              placeholder={color1Placeholder}
+              value={color1}
+              onChange={onColor1Change}
+            />
+          </div>
           <span>
             {
               gradientDirections.find(
@@ -66,20 +75,38 @@ function ColorControl({
               )?.symbol
             }
           </span>
-          <input
-            type="text"
-            placeholder={color2Placeholder}
-            value={color2}
-            onChange={onColor2Change}
-          />
+          <div className="color-input-wrapper">
+            <input
+              type="color"
+              value={color2 || color2Placeholder}
+              onChange={onColor2Change}
+              className="color-picker"
+              title="Pick a color"
+            />
+            <input
+              type="text"
+              placeholder={color2Placeholder}
+              value={color2}
+              onChange={onColor2Change}
+            />
+          </div>
         </div>
       ) : (
-        <input
-          type="text"
-          placeholder={solidPlaceholder}
-          value={solidColor}
-          onChange={onSolidColorChange}
-        />
+        <div className="color-input-wrapper">
+          <input
+            type="color"
+            value={solidColor || '#ffffff'}
+            onChange={onSolidColorChange}
+            className="color-picker"
+            title="Pick a color"
+          />
+          <input
+            type="text"
+            placeholder={solidPlaceholder}
+            value={solidColor}
+            onChange={onSolidColorChange}
+          />
+        </div>
       )}
     </div>
   );
