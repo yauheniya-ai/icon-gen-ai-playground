@@ -8,6 +8,7 @@ function OutputPanel({
   handleGenerate,
   loading,
   error,
+  warning,
   inputPreview,
   outputPreview,
   downloadIcon
@@ -182,6 +183,7 @@ function OutputPanel({
       </button>
 
       {error && <div className="error">{error}</div>}
+      {warning && <div className="warning">{warning}</div>}
 
       <PreviewBox
         outputPreview={outputPreview}

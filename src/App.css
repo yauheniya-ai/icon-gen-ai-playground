@@ -410,6 +410,17 @@ header p {
   font-size: 0.9rem;
 }
 
+/* Warning Message */
+.warning {
+  padding: 0.75rem;
+  background: #f5c542;
+  color: #1d1d1f;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 /* Footer */
 footer {
   background: white;

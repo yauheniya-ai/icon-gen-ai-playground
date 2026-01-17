@@ -34,6 +34,7 @@ function App() {
   const [outputPreview, setOutputPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [warning, setWarning] = useState('');
 
   // Track previous background state and whether scale was manually changed
   const prevHasBackgroundRef = useRef(false);
@@ -94,15 +95,14 @@ function App() {
   const handleGenerate = async () => {
     setLoading(true);
     setError('');
+    setWarning('');
     if (
       isJpegInput &&
       (config.colorGradient || config.color !== 'white')
     ) {
-      setError(
+      setWarning(
         'JPEG/JPG icons cannot change icon color. Background color is still supported.'
       );
-      setLoading(false);
-      return;
     }
     try {
       const formData = new FormData();
@@ -306,6 +306,7 @@ function App() {
           handleGenerate={handleGenerate}
           loading={loading}
           error={error}
+          warning={warning}
           inputPreview={inputPreview}
           outputPreview={outputPreview}
           downloadIcon={downloadIcon}
