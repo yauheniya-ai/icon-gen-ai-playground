@@ -17,7 +17,7 @@ function App() {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [inputPreview, setInputPreview] = useState(null);
   const [config, setConfig] = useState({
-    color: 'white',
+    color: '#ffffff',
     colorGradient: false,
     iconGradientDirection: "horizontal", 
     color1: '#7B68EE',
