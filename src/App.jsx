@@ -1,11 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { generateIcon } from './api';
 import { trackIconDownload } from "./analytics";
+import { onAuthChange, logout } from './firebase';
 import InputPanel from './components/InputPanel.jsx';
 import OutputPanel from './components/OutputPanel.jsx';
+import LoginButton from './components/LoginButton.jsx';
+import AuthModal from './components/AuthModal.jsx';
 import './App.css';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const [inputType, setInputType] = useState('iconify');
   const [iconName, setIconName] = useState('emojione-monotone:optical-disk');
   const [directUrl, setDirectUrl] = useState('https://upload.wikimedia.org/wikipedia/commons/f/f6/Builder_icon_hicolor.png');
@@ -39,6 +44,14 @@ function App() {
   // Track previous background state and whether scale was manually changed
   const prevHasBackgroundRef = useRef(false);
   const scaleManuallyChangedRef = useRef(false);
+  
+  // Auth state listener
+  useEffect(() => {
+    const unsubscribe = onAuthChange((user) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
   
   // Auto-adjust scale when background is toggled (only if not manually changed)
   useEffect(() => {
@@ -282,12 +295,33 @@ function App() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
+  };
+
   return (
     <div className="app">
       <header>
-        <h1>Icon Gen AI – Playground</h1>
-        <p>Generate pixel-perfect icons with custom color, background, border radius, and outline. Export to svg, png, webp, and ico</p>
+        <div className="header-content">
+          <div className="header-title">
+            <h1>Icon Gen AI – Playground</h1>
+            <p>Generate pixel-perfect icons from Iconify, direct URLs, and local files—with animation support and exports to PNG, SVG, WebP, and ICO.</p>
+          </div>
+          <LoginButton 
+            user={user} 
+            onLoginClick={() => setShowAuthModal(true)}
+            onLogout={handleLogout}
+          />
+        </div>
       </header>
+      <AuthModal 
+        isOpen={showAuthModal} 
+        onClose={() => setShowAuthModal(false)} 
+      />
       <div className="container">
         <InputPanel
           inputType={inputType}

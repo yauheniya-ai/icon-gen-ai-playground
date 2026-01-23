@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@iconify/react": "^5.0.2",
     "axios": "^1.13.2",
+    "firebase": "^11.1.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
