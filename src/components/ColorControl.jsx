@@ -15,6 +15,24 @@ function ColorControl({
   color1Placeholder,
   color2Placeholder
 }) {
+  // Helper function to convert color names to hex for color inputs
+  const toHex = (color) => {
+    if (!color) return '#ffffff';
+    if (color.startsWith('#')) return color;
+    // Convert common color names to hex
+    const colorMap = {
+      'white': '#ffffff',
+      'black': '#000000',
+      'red': '#ff0000',
+      'green': '#00ff00',
+      'blue': '#0000ff',
+      'yellow': '#ffff00',
+      'cyan': '#00ffff',
+      'magenta': '#ff00ff'
+    };
+    return colorMap[color.toLowerCase()] || '#ffffff';
+  };
+
   return (
     <div className="section">
       <div className="label-row">
@@ -56,7 +74,7 @@ function ColorControl({
           <div className="color-input-wrapper">
             <input
               type="color"
-              value={color1 || color1Placeholder}
+              value={toHex(color1 || color1Placeholder)}
               onChange={onColor1Change}
               className="color-picker"
               title="Pick a color"
@@ -78,7 +96,7 @@ function ColorControl({
           <div className="color-input-wrapper">
             <input
               type="color"
-              value={color2 || color2Placeholder}
+              value={toHex(color2 || color2Placeholder)}
               onChange={onColor2Change}
               className="color-picker"
               title="Pick a color"
@@ -95,7 +113,7 @@ function ColorControl({
         <div className="color-input-wrapper">
           <input
             type="color"
-            value={solidColor || '#ffffff'}
+            value={toHex(solidColor)}
             onChange={onSolidColorChange}
             className="color-picker"
             title="Pick a color"
