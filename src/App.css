@@ -765,8 +765,38 @@ footer a:hover {
     grid-template-columns: 1fr;
   }
   
+  header {
+    padding: 1.5rem;
+  }
+  
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
   header h1 {
     font-size: 2rem;
+  }
+  
+  .login-button-container {
+    position: static;
+    transform: none;
+    margin-top: 1rem;
+    align-self: flex-end;
+  }
+  
+  .login-btn {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .login-btn svg {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .user-greeting {
+    font-size: 0.85rem;
   }
   
   .preview-box img,
