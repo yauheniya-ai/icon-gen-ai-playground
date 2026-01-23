@@ -82,34 +82,6 @@ header p {
   color: gold;
 }
 
-.login-tooltip {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-70%) translateY(-8px);
-  background: gold;
-  color: black;
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  white-space: nowrap;
-  pointer-events: none;
-  transition: opacity 0.2s, visibility 0.2s;
-  z-index: 1000;
-}
-
-.login-tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 5px solid transparent;
-  border-top-color: gold;
-}
-
 .login-btn-wrapper:hover .login-tooltip {
   visibility: visible;
   opacity: 1;

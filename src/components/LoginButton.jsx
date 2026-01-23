@@ -20,7 +20,6 @@ function LoginButton({ user, onLoginClick, onLogout }) {
           >
             <Icon icon="ic:round-login" width="40" height="40" />
           </button>
-          <span className="login-tooltip">Login</span>
         </div>
       )}
     </div>
