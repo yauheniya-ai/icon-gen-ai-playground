@@ -1,16 +1,24 @@
 import { useState, useEffect, useRef } from 'react';
-import { generateIcon } from './api';
+import { generateIcon, getSettings, saveSettings } from './api';
 import { trackIconDownload } from "./analytics";
 import { onAuthChange, logout } from './firebase';
 import InputPanel from './components/InputPanel.jsx';
 import OutputPanel from './components/OutputPanel.jsx';
 import LoginButton from './components/LoginButton.jsx';
 import AuthModal from './components/AuthModal.jsx';
+import SavedCollections from './components/SavedCollections.jsx';
+import SaveToCollection from './components/SaveToCollection.jsx';
+import SaveSettings from './components/SaveSettings.jsx';
+import ViewSettings from './components/ViewSettings.jsx';
 import './App.css';
 
 function App() {
   const [user, setUser] = useState(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showCollections, setShowCollections] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showSaveSettings, setShowSaveSettings] = useState(false);
+  const [showViewSettings, setShowViewSettings] = useState(false);
   const [inputType, setInputType] = useState('iconify');
   const [iconName, setIconName] = useState('emojione-monotone:optical-disk');
   const [directUrl, setDirectUrl] = useState('https://upload.wikimedia.org/wikipedia/commons/f/f6/Builder_icon_hicolor.png');
@@ -49,9 +57,47 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthChange((user) => {
       setUser(user);
+      // User authentication state changed
+      setUser(user);
     });
     return () => unsubscribe();
   }, []);
+
+  // Save current settings to Firestore
+  const handleSaveSettings = async () => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+    setShowSaveSettings(true);
+  };
+
+  // Load settings from a saved configuration
+  const handleLoadSettings = (settings) => {
+    setConfig({
+      color: settings.iconColor || '#ffffff',
+      colorGradient: settings.iconGradient || false,
+      color1: settings.iconColor1 || '#7B68EE',
+      color2: settings.iconColor2 || '#FF1493',
+      iconGradientDirection: settings.iconGradientDirection || 'horizontal',
+      bg_color: settings.bgColor || '',
+      bgGradient: settings.bgGradient || false,
+      bg_color1: settings.bgColor1 || '#7B68EE',
+      bg_color2: settings.bgColor2 || '#FF1493',
+      bgGradientDirection: settings.bgGradientDirection || 'horizontal',
+      border_radius: settings.borderRadius || 0,
+      outline_width: settings.outlineWidth || 0,
+      outline_color: settings.outlineColor || '',
+      animationEnabled: settings.animationEnabled || false,
+      animationType: settings.animationType || 'spin',
+      animationDuration: settings.animationDuration || 4,
+      size: settings.size || 256,
+      scale: settings.scale || 1.0,
+    });
+    if (settings.lastQuery) {
+      setIconName(settings.lastQuery);
+    }
+  };
   
   // Auto-adjust scale when background is toggled (only if not manually changed)
   useEffect(() => {
@@ -303,6 +349,41 @@ function App() {
     }
   };
 
+  const handleSaveIcon = async () => {
+    if (!outputPreview) {
+      alert('Please generate an icon first');
+      return;
+    }
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+    setShowSaveModal(true);
+  };
+
+  const getIconSvg = async () => {
+    if (!outputPreview) return null;
+    try {
+      const response = await fetch(outputPreview);
+      const svgText = await response.text();
+      return svgText;
+    } catch (err) {
+      console.error('Failed to get SVG:', err);
+      return null;
+    }
+  };
+
+  const getIconName = () => {
+    if (inputType === 'iconify') {
+      return iconName;
+    } else if (inputType === 'url') {
+      return directUrl.split('/').pop() || 'icon';
+    } else if (inputType === 'upload' && uploadedFile) {
+      return uploadedFile.name.replace(/\.[^/.]+$/, '');
+    }
+    return 'icon';
+  };
+
   return (
     <div className="app">
       <header>
@@ -318,10 +399,72 @@ function App() {
           />
         </div>
       </header>
-      <AuthModal 
-        isOpen={showAuthModal} 
-        onClose={() => setShowAuthModal(false)} 
-      />
+      
+      {showAuthModal && (
+        <AuthModal 
+          isOpen={showAuthModal} 
+          onClose={() => setShowAuthModal(false)} 
+        />
+      )}
+      
+      {showCollections && (
+        <SavedCollections 
+          user={user}
+          onClose={() => setShowCollections(false)}
+        />
+      )}
+      
+      {showViewSettings && (
+        <ViewSettings
+          user={user}
+          onClose={() => setShowViewSettings(false)}
+          onLoadSettings={handleLoadSettings}
+        />
+      )}
+
+      {showSaveSettings && (
+        <SaveSettings
+          currentSettings={{
+            iconColor: config.color,
+            iconGradient: config.colorGradient,
+            iconColor1: config.color1,
+            iconColor2: config.color2,
+            iconGradientDirection: config.iconGradientDirection,
+            bgColor: config.bg_color,
+            bgGradient: config.bgGradient,
+            bgColor1: config.bg_color1,
+            bgColor2: config.bg_color2,
+            bgGradientDirection: config.bgGradientDirection,
+            borderRadius: config.border_radius,
+            outlineWidth: config.outline_width,
+            outlineColor: config.outline_color,
+            animationEnabled: config.animationEnabled,
+            animationType: config.animationType,
+            animationDuration: config.animationDuration,
+            size: config.size,
+            scale: config.scale,
+            lastQuery: iconName,
+          }}
+          onClose={() => setShowSaveSettings(false)}
+          onSaved={() => {
+            setShowSaveSettings(false);
+            alert('Settings saved successfully!');
+          }}
+        />
+      )}
+
+      {showSaveModal && outputPreview && (
+        <SaveToCollection
+          user={user}
+          iconSvg={outputPreview}
+          iconName={getIconName()}
+          onClose={() => setShowSaveModal(false)}
+          onSaved={() => {
+            alert('Icon saved successfully!');
+          }}
+        />
+      )}
+      
       <div className="container">
         <InputPanel
           inputType={inputType}
@@ -341,9 +484,14 @@ function App() {
           loading={loading}
           error={error}
           warning={warning}
+          onViewSettings={() => setShowViewSettings(true)}
           inputPreview={inputPreview}
           outputPreview={outputPreview}
           downloadIcon={downloadIcon}
+          user={user}
+          onSaveIcon={handleSaveIcon}
+          onViewCollections={() => setShowCollections(true)}
+          onSaveSettings={handleSaveSettings}
         />
       </div>
       <footer>

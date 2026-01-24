@@ -1,0 +1,266 @@
+/* Save To Collection Modal */
+.save-to-collection-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.save-to-collection-content {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Error Banner */
+.error-banner {
+  background: #fff5f5;
+  border: 1px solid #ff3b30;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ff3b30;
+  font-size: 0.9rem;
+}
+
+/* Icon Preview Section */
+.icon-preview-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f5f5f7;
+  border-radius: 8px;
+}
+
+.icon-preview-box {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.icon-preview-box svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.icon-name {
+  font-weight: 500;
+  color: #1d1d1f;
+  font-size: 0.9rem;
+}
+
+/* Collections Section */
+.collections-section h3,
+.new-collection-form h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #86868b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.collections-list-save {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.collection-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: #f5f5f7;
+  border: 1px solid #e5e5e7;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+  color: #1d1d1f;
+  width: 100%;
+  text-align: left;
+}
+
+.collection-option:hover:not(:disabled) {
+  background: white;
+  border-color: mediumslateblue;
+  box-shadow: 0 2px 8px rgba(123, 104, 238, 0.15);
+}
+
+.collection-option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.collection-option .collection-name {
+  flex: 1;
+  font-weight: 500;
+}
+
+.collection-option .icon-count {
+  color: #86868b;
+  font-size: 0.85rem;
+}
+
+/* New Collection Button */
+.new-collection-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+  background: mediumslateblue;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.new-collection-btn:hover:not(:disabled) {
+  background: slateblue;
+}
+
+.new-collection-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* New Collection Form */
+.new-collection-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid #e5e5e7;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: mediumslateblue;
+}
+
+.input-group input:disabled {
+  background: #f5f5f7;
+  cursor: not-allowed;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.cancel-btn,
+.create-btn {
+  flex: 1;
+  padding: 0.875rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-btn {
+  background: #f5f5f7;
+  color: #1d1d1f;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: #e5e5e7;
+}
+
+.create-btn {
+  background: mediumslateblue;
+  color: white;
+}
+
+.create-btn:hover:not(:disabled) {
+  background: slateblue;
+}
+
+.cancel-btn:disabled,
+.create-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Loading State */
+.loading-state {
+  padding: 2rem;
+  text-align: center;
+  color: #86868b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.loading-state svg.spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Auth Required */
+.auth-required {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: #86868b;
+}
+
+.auth-required svg {
+  margin-bottom: 1rem;
+  color: #d2d2d7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .save-to-collection-content {
+    width: 95%;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+}

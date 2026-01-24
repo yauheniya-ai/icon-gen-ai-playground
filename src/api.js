@@ -72,3 +72,32 @@ export const deleteCollection = async (collectionId) => {
   return response.data;
 };
 
+// Settings management APIs
+export const getSettings = async () => {
+  const headers = await getAuthHeaders();
+  const response = await axios.get(
+    `${API_URL}/settings`,
+    { headers }
+  );
+  return response.data;
+};
+
+export const saveSettings = async (settings) => {
+  const headers = await getAuthHeaders();
+  const response = await axios.post(
+    `${API_URL}/settings`,
+    settings,
+    { headers }
+  );
+  return response.data;
+};
+
+export const deleteSettings = async (settingsId) => {
+  const headers = await getAuthHeaders();
+  const response = await axios.delete(
+    `${API_URL}/settings/${settingsId}`,
+    { headers }
+  );
+  return response.data;
+};
+

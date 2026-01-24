@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react';
 import ColorControl from './ColorControl';
 import PreviewBox from './PreviewBox';
 
@@ -11,7 +12,12 @@ function OutputPanel({
   warning,
   inputPreview,
   outputPreview,
-  downloadIcon
+  downloadIcon,
+  user,
+  onSaveIcon,
+  onViewCollections,
+  onSaveSettings,
+  onViewSettings
 }) {
   const gradientDirections = [
     { value: "horizontal", symbol: "→" },
@@ -179,8 +185,32 @@ function OutputPanel({
         onClick={handleGenerate}
         disabled={loading || !inputPreview}
       >
+        <Icon icon="ri:apps-ai-line" width="18" height="18" />
         {loading ? 'Generating...' : 'Generate Icon'}
       </button>
+      
+      {user && (
+        <div className="user-actions">
+          <button 
+            className="action-btn save-settings-btn"
+            onClick={onSaveSettings}
+            title="Save current settings"
+            style={{ background: 'mediumslateblue' }}
+          >
+            <Icon icon="mingcute:settings-6-line" width="18" height="18" />
+            Save Settings
+          </button>
+          <button 
+            className="action-btn view-settings-btn"
+            onClick={onViewSettings}
+            title="View saved settings"
+            style={{ background: 'deeppink' }}
+          >
+            <Icon icon="carbon:settings-view" width="18" height="18" />
+            View Saved Settings
+          </button>
+        </div>
+      )}
 
       {error && <div className="error">{error}</div>}
       {warning && <div className="warning">{warning}</div>}
@@ -189,6 +219,9 @@ function OutputPanel({
         outputPreview={outputPreview}
         loading={loading}
         downloadIcon={downloadIcon}
+        onSaveIcon={onSaveIcon}
+        onViewCollections={onViewCollections}
+        user={user}
       />
     </div>
   );

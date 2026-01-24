@@ -563,16 +563,20 @@ header p {
 /* Buttons */
 .generate-btn {
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
   background: deepskyblue;
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .generate-btn:hover:not(:disabled) {
@@ -582,6 +586,114 @@ header p {
 .generate-btn:disabled {
   background: #d2d2d7;
   cursor: not-allowed;
+}
+
+/* User Actions */
+.user-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: white !important;
+  color: #1d1d1f !important;
+  border: 2px solid;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn svg {
+  color: #1d1d1f !important;
+}
+
+.action-btn.save-settings-btn,
+.action-btn.view-settings-btn {
+  border-color: deepskyblue;
+}
+
+.action-btn.save-settings-btn:hover,
+.action-btn.view-settings-btn:hover {
+  background: deepskyblue !important;
+  color: white !important;
+}
+
+.action-btn.save-settings-btn:hover svg,
+.action-btn.view-settings-btn:hover svg {
+  color: white !important;
+}
+
+.action-btn:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.collection-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0.75rem;
+}
+
+.collection-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: white !important;
+  color: #1d1d1f !important;
+  border: 2px solid #34c759;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.collection-btn svg {
+  color: #1d1d1f !important;
+}
+
+.collection-btn:hover {
+  background: #34c759 !important;
+  color: white !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.collection-btn:hover svg {
+  color: white !important;
+}
+
+.save-icon-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: mediumslateblue;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.75rem;
+}
+
+.save-icon-btn:hover {
+  background: slateblue;
 }
 
 .download-btn {

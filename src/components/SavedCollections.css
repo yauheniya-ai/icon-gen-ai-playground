@@ -1,0 +1,349 @@
+/* Saved Collections Modal */
+.saved-collections-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.saved-collections-content {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e5e7;
+}
+
+.modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #86868b;
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  background: #f5f5f7;
+  color: #1d1d1f;
+}
+
+/* Auth Required */
+.auth-required {
+  padding: 3rem;
+  text-align: center;
+  color: #86868b;
+}
+
+.auth-required svg {
+  margin-bottom: 1rem;
+  color: #d2d2d7;
+}
+
+/* Loading State */
+.loading {
+  padding: 3rem;
+  text-align: center;
+  color: #86868b;
+}
+
+.loading svg.spin {
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Error State */
+.error-message {
+  padding: 2rem;
+  text-align: center;
+  color: #ff3b30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.error-message button {
+  padding: 0.5rem 1rem;
+  background: mediumslateblue;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.error-message button:hover {
+  background: slateblue;
+}
+
+/* Empty State */
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: #86868b;
+}
+
+.empty-state svg {
+  margin-bottom: 1rem;
+  color: #d2d2d7;
+}
+
+.empty-state small {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Collections Layout */
+.collections-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* Collections List */
+.collections-list {
+  border-right: 1px solid #e5e5e7;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.collections-list h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #86868b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+}
+
+.collection-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 0.25rem;
+}
+
+.collection-item:hover {
+  background: #f5f5f7;
+}
+
+.collection-item.active {
+  background: #e5e5e7;
+}
+
+.collection-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.collection-name {
+  font-weight: 500;
+  color: #1d1d1f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon-count {
+  color: #86868b;
+  font-size: 0.85rem;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  color: #86868b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.collection-item:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  background: #ff3b30;
+  color: white;
+}
+
+/* Collection Preview */
+.collection-preview {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.collection-preview h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 1.5rem;
+}
+
+.no-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #86868b;
+}
+
+.no-selection svg {
+  margin-bottom: 1rem;
+  color: #d2d2d7;
+}
+
+/* Icons Grid */
+.icons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 1rem;
+}
+
+.icon-card {
+  aspect-ratio: 1;
+  border: 1px solid #e5e5e7;
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-card:hover {
+  border-color: mediumslateblue;
+  box-shadow: 0 4px 12px rgba(123, 104, 238, 0.15);
+}
+
+.icon-preview {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-preview svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.icon-actions {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.icon-card:hover .icon-actions {
+  opacity: 1;
+}
+
+.icon-actions button {
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.download-icon-btn {
+  background: mediumslateblue;
+}
+
+.download-icon-btn:hover {
+  background: slateblue;
+}
+
+.delete-icon-btn {
+  background: #ff3b30;
+}
+
+.delete-icon-btn:hover {
+  background: #d32f2f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .saved-collections-content {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .collections-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .collections-list {
+    border-right: none;
+    border-bottom: 1px solid #e5e5e7;
+    max-height: 200px;
+  }
+
+  .icons-grid {
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  }
+}
