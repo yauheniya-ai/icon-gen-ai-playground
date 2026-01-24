@@ -10,6 +10,7 @@ import SavedCollections from './components/SavedCollections.jsx';
 import SaveToCollection from './components/SaveToCollection.jsx';
 import SaveSettings from './components/SaveSettings.jsx';
 import ViewSettings from './components/ViewSettings.jsx';
+import GradientWarningModal from './components/GradientWarningModal.jsx';
 import './App.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showSaveSettings, setShowSaveSettings] = useState(false);
   const [showViewSettings, setShowViewSettings] = useState(false);
+  const [showGradientWarning, setShowGradientWarning] = useState(false);
   const [inputType, setInputType] = useState('iconify');
   const [iconName, setIconName] = useState('emojione-monotone:optical-disk');
   const [directUrl, setDirectUrl] = useState('https://upload.wikimedia.org/wikipedia/commons/f/f6/Builder_icon_hicolor.png');
@@ -358,6 +360,13 @@ function App() {
       setShowAuthModal(true);
       return;
     }
+    
+    // Check if icon uses gradient colors
+    if (config.colorGradient) {
+      setShowGradientWarning(true);
+      return;
+    }
+    
     setShowSaveModal(true);
   };
 
@@ -404,6 +413,13 @@ function App() {
         <AuthModal 
           isOpen={showAuthModal} 
           onClose={() => setShowAuthModal(false)} 
+        />
+      )}
+      
+      {showGradientWarning && (
+        <GradientWarningModal 
+          isOpen={showGradientWarning} 
+          onClose={() => setShowGradientWarning(false)} 
         />
       )}
       
