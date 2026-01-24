@@ -11,7 +11,7 @@ function GradientWarningModal({ isOpen, onClose }) {
         
         <div className="warning-header">
           <Icon icon="line-md:alert" width="32" height="32" />
-          <h2>Gradient Icons Cannot Be Saved</h2>
+          <h2>Gradient Icons Cannot Be Saved to Collection</h2>
         </div>
         
         <div className="warning-body">
