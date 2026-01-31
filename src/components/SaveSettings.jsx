@@ -109,7 +109,6 @@ function SaveSettings({ currentSettings, onClose, onSaved }) {
             </button>
           </div>
         </div>
-
         {loading ? (
           <div className="loading">
             <Icon icon="ic:round-refresh" className="spin" width="24" height="24" />
