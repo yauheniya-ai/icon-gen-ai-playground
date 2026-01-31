@@ -4,7 +4,9 @@ import {
   signInWithGoogle, 
   signInWithGithub, 
   loginWithEmail, 
-  signupWithEmail 
+  signupWithEmail, 
+  sendVerificationEmail, 
+  isEmailVerified 
 } from '../firebase';
 
 function AuthModal({ isOpen, onClose }) {
@@ -39,11 +41,22 @@ function AuthModal({ isOpen, onClose }) {
     setLoading(true);
     try {
       if (isLogin) {
-        await loginWithEmail(email, password);
+        const userCredential = await loginWithEmail(email, password);
+        const user = userCredential.user;
+        if (!isEmailVerified(user)) {
+          setError('Please verify your email address before logging in. Check your inbox for a verification email.');
+          setLoading(false);
+          return;
+        }
+        onClose();
       } else {
-        await signupWithEmail(email, password);
+        const userCredential = await signupWithEmail(email, password);
+        const user = userCredential.user;
+        await sendVerificationEmail(user);
+        setError('A verification email has been sent. Please check your inbox and verify your email before logging in.');
+        setLoading(false);
+        return;
       }
-      onClose();
     } catch (err) {
       setError(err.message);
     } finally {

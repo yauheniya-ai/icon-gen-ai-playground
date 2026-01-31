@@ -8,7 +8,8 @@ import {
   signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
-  GithubAuthProvider
+  GithubAuthProvider,
+  sendEmailVerification
 } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
@@ -40,6 +41,12 @@ export const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
 export const signInWithGithub = () => signInWithPopup(auth, githubProvider);
 export const loginWithEmail = (email, password) => signInWithEmailAndPassword(auth, email, password);
 export const signupWithEmail = (email, password) => createUserWithEmailAndPassword(auth, email, password);
+
+// Send verification email to user
+export const sendVerificationEmail = (user) => sendEmailVerification(user);
+
+// Helper to check if user's email is verified
+export const isEmailVerified = (user) => user?.emailVerified === true;
 export const logout = () => signOut(auth);
 export const onAuthChange = (callback) => onAuthStateChanged(auth, callback);
 
