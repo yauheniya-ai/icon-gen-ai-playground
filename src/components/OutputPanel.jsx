@@ -23,6 +23,7 @@ function OutputPanel({
     { value: "horizontal", symbol: "→" },
     { value: "vertical", symbol: "↓" },
     { value: "diagonal", symbol: "↘" },
+    { value: "radial", symbol: <Icon icon="grommet-icons:radial-selected" width="13" height="13" style={{ verticalAlign: 'middle' }} /> },
   ];
 
   const cycleIconGradientDirection = () => {
