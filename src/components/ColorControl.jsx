@@ -168,21 +168,27 @@ function ColorControl({
       'white': '#ffffff',
       'whitesmoke': '#f5f5f5',
       'yellow': '#ffff00',
+      'transparent': 'transparent',
       'yellowgreen': '#9acd32'
     };
+    // For the color picker we always need a valid hex; transparent and empty fall back to white
+    if (color === 'transparent' || !color) return '#ffffff';
     return colorMap[color.toLowerCase()] || color;
   };
 
-  // Wrap onChange handlers to convert color names to hex
-  const handleColorChange = (handler) => (e) => {
-    const value = e.target.value;
-    const hexValue = toHex(value);
-    // Create a new event with the hex value
-    const newEvent = {
-      ...e,
-      target: { ...e.target, value: hexValue }
-    };
-    handler(newEvent);
+  // Normalise a colour name → hex only on blur; transparent is kept as-is
+  const normalizeOnBlur = (handler) => (e) => {
+    const value = e.target.value.trim();
+    if (!value || value === 'transparent' || value.startsWith('#')) return;
+    const hex = toHex(value);
+    if (hex !== value) {
+      handler({ target: { value: hex } });
+    }
+  };
+
+  // Handler for the colour picker – always produces valid hex, propagate directly
+  const handlePickerChange = (handler) => (e) => {
+    handler(e);
   };
 
   return (
@@ -227,7 +233,7 @@ function ColorControl({
             <input
               type="color"
               value={toHex(color1 || color1Placeholder)}
-              onChange={handleColorChange(onColor1Change)}
+              onChange={handlePickerChange(onColor1Change)}
               className="color-picker"
               title="Pick a color"
             />
@@ -235,7 +241,8 @@ function ColorControl({
               type="text"
               placeholder={color1Placeholder}
               value={color1}
-              onChange={handleColorChange(onColor1Change)}
+              onChange={onColor1Change}
+              onBlur={normalizeOnBlur(onColor1Change)}
             />
           </div>
           <span>
@@ -249,7 +256,7 @@ function ColorControl({
             <input
               type="color"
               value={toHex(color2 || color2Placeholder)}
-              onChange={handleColorChange(onColor2Change)}
+              onChange={handlePickerChange(onColor2Change)}
               className="color-picker"
               title="Pick a color"
             />
@@ -257,7 +264,8 @@ function ColorControl({
               type="text"
               placeholder={color2Placeholder}
               value={color2}
-              onChange={handleColorChange(onColor2Change)}
+              onChange={onColor2Change}
+              onBlur={normalizeOnBlur(onColor2Change)}
             />
           </div>
         </div>
@@ -266,7 +274,7 @@ function ColorControl({
           <input
             type="color"
             value={toHex(solidColor)}
-            onChange={handleColorChange(onSolidColorChange)}
+            onChange={handlePickerChange(onSolidColorChange)}
             className="color-picker"
             title="Pick a color"
           />
@@ -274,7 +282,8 @@ function ColorControl({
             type="text"
             placeholder={solidPlaceholder}
             value={solidColor}
-            onChange={handleColorChange(onSolidColorChange)}
+            onChange={onSolidColorChange}
+            onBlur={normalizeOnBlur(onSolidColorChange)}
           />
         </div>
       )}
