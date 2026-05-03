@@ -491,6 +491,8 @@ function App() {
           setDirectUrl={setDirectUrl}
           handleFileUpload={handleFileUpload}
           inputPreview={inputPreview}
+          setInputPreview={setInputPreview}
+          setUploadedFile={setUploadedFile}
         />
         <OutputPanel
           config={config}

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { discoverIcons } from '../api';
+import ImageCropper from './ImageCropper';
 
 function InputPanel({
   inputType,
@@ -9,11 +10,40 @@ function InputPanel({
   directUrl,
   setDirectUrl,
   handleFileUpload,
-  inputPreview
+  inputPreview,
+  setInputPreview,
+  setUploadedFile
 }) {
   const [aiQuery, setAiQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [rawUploadSrc, setRawUploadSrc] = useState(null);
+  const [showCropper, setShowCropper] = useState(false);
+
+  const handleFileChange = useCallback((e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    // Show cropper for raster images; pass SVG straight through
+    if (file.type === 'image/svg+xml') {
+      handleFileUpload(e);
+      setRawUploadSrc(null);
+      setShowCropper(false);
+    } else {
+      const url = URL.createObjectURL(file);
+      setRawUploadSrc(url);
+      setShowCropper(true);
+      // Also pass original file so parent has it before crop is applied
+      handleFileUpload(e);
+    }
+  }, [handleFileUpload]);
+
+  const handleCropComplete = useCallback((croppedUrl, croppedBlob) => {
+    if (setInputPreview) setInputPreview(croppedUrl);
+    if (setUploadedFile) {
+      const file = new File([croppedBlob], 'cropped-image.png', { type: 'image/png' });
+      setUploadedFile(file);
+    }
+  }, [setInputPreview, setUploadedFile]);
 
   const handleAiSearch = async () => {
     if (!aiQuery.trim()) return;
@@ -153,9 +183,15 @@ function InputPanel({
           <input
             type="file"
             accept=".svg,.png,.webp,.jpg,.jpeg,image/svg+xml,image/png,image/webp,image/jpeg"
-            onChange={handleFileUpload}
+            onChange={handleFileChange}
           />
         </div>
+      )}
+      {inputType === 'upload' && showCropper && rawUploadSrc && (
+        <ImageCropper
+          imageSrc={rawUploadSrc}
+          onCropComplete={handleCropComplete}
+        />
       )}
       <div className="preview-box">
         <div className="preview-label">Input Preview</div>
