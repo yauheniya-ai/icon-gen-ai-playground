@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { discoverIcons } from '../api';
 import ImageCropper from './ImageCropper';
 
@@ -19,6 +19,80 @@ function InputPanel({
   const [isSearching, setIsSearching] = useState(false);
   const [rawUploadSrc, setRawUploadSrc] = useState(null);
   const [showCropper, setShowCropper] = useState(false);
+  const [showSvgCode, setShowSvgCode] = useState(false);
+  const [inputSvgCode, setInputSvgCode] = useState(null);
+
+  useEffect(() => {
+    setInputSvgCode(null);
+    setShowSvgCode(false);
+    if (!inputPreview) return;
+    const extractSvg = async () => {
+      try {
+        if (inputPreview.startsWith('data:image/svg+xml;base64,')) {
+          const b64 = inputPreview.slice('data:image/svg+xml;base64,'.length);
+          setInputSvgCode(atob(b64));
+        } else if (inputPreview.startsWith('data:image/svg+xml,')) {
+          setInputSvgCode(decodeURIComponent(inputPreview.slice('data:image/svg+xml,'.length)));
+        } else if (inputPreview.startsWith('data:')) {
+          // non-SVG data url
+          setInputSvgCode(null);
+        } else {
+          const res = await fetch(inputPreview);
+          const ct = res.headers.get('content-type') || '';
+          if (ct.includes('svg') || inputPreview.endsWith('.svg')) {
+            const text = await res.text();
+            setInputSvgCode(text);
+          }
+        }
+      } catch {
+        setInputSvgCode(null);
+      }
+    };
+    extractSvg();
+  }, [inputPreview]);
+
+  const downloadInputIcon = async (format) => {
+    if (!inputPreview) return;
+    if (format === 'svg') {
+      if (inputSvgCode) {
+        const blob = new Blob([inputSvgCode], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `input-icon-${Date.now()}.svg`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } else {
+        const a = document.createElement('a');
+        a.href = inputPreview;
+        a.download = `input-icon-${Date.now()}.svg`;
+        a.click();
+      }
+      return;
+    }
+    // Raster formats via canvas
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const size = format === 'ico' ? 32 : (img.naturalWidth || 256);
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, size, size);
+      const mime = format === 'ico' ? 'image/png' : `image/${format}`;
+      const ext = format === 'ico' ? 'ico' : format;
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `input-icon-${Date.now()}.${ext}`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }, mime);
+    };
+    img.src = inputPreview;
+  };
 
   const handleFileChange = useCallback((e) => {
     const file = e.target.files?.[0];
@@ -196,7 +270,30 @@ function InputPanel({
       <div className="preview-box">
         <div className="preview-label">Input Preview</div>
         {inputPreview ? (
-          <img src={inputPreview} alt="Input preview" />
+          <>
+            <img src={inputPreview} alt="Input preview" />
+            <div className="download-actions">
+              <span>Download</span>
+              <button className="download-btn compact" onClick={() => downloadInputIcon('svg')} disabled={!inputSvgCode}>SVG</button>
+              <button className="download-btn compact" onClick={() => downloadInputIcon('png')}>PNG</button>
+              <button className="download-btn compact" onClick={() => downloadInputIcon('webp')}>WEBP</button>
+              <button className="download-btn compact" onClick={() => downloadInputIcon('ico')}>ICO</button>
+              {inputSvgCode && (
+                <>
+                  <span className="svg-code-label">SVG code</span>
+                  <button
+                    className="svg-toggle-btn"
+                    onClick={() => setShowSvgCode((v) => !v)}
+                  >
+                    {showSvgCode ? 'hide' : 'show'}
+                  </button>
+                </>
+              )}
+            </div>
+            {showSvgCode && inputSvgCode && (
+              <pre className="svg-code-block"><code>{inputSvgCode}</code></pre>
+            )}
+          </>
         ) : (
           <div className="preview-placeholder">No input selected</div>
         )}
