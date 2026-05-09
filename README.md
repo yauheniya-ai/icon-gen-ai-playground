@@ -68,18 +68,18 @@ pip install icon-gen-ai
 ## Tech Stack
 
 ### Frontend
-- <img src="https://api.iconify.design/logos/react.svg" width="16" height="16" /> React 19
-- <img src="https://api.iconify.design/devicon/vitejs.svg" width="16" height="16" /> Vite 7
-- <img src="https://api.iconify.design/simple-icons/axios.svg" width="16" height="16" /> Axios
-- <img src="https://api.iconify.design/devicon/css3.svg" width="16" height="16" /> CSS3
+- ![React](https://api.iconify.design/logos:react.svg?height=16) [React](https://react.dev) 19
+- ![Vite](https://api.iconify.design/devicon:vitejs.svg?height=16) [Vite](https://vite.dev) 7
+- ![Axios](https://api.iconify.design/simple-icons:axios.svg?height=16) [Axios](https://axios-http.com)
+- ![CSS3](https://api.iconify.design/devicon:css3.svg?height=16) [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
 ### Backend
-- <img src="https://api.iconify.design/devicon/fastapi.svg" width="16" height="16" /> FastAPI
-- <img src="https://api.iconify.design/devicon/pypi.svg" width="16" height="16" /> icon-gen-ai (PyPI)
+- ![FastAPI](https://api.iconify.design/devicon:fastapi.svg?height=16) [FastAPI](https://fastapi.tiangolo.com)
+- ![PyPI](https://api.iconify.design/devicon:pypi.svg?height=16) [icon-gen-ai](https://pypi.org/project/icon-gen-ai/) (PyPI)
 
 ### Deployment
-- <img src="https://api.iconify.design/mdi/github.svg" width="16" height="16" /> Frontend: GitHub Pages
-- <img src="https://api.iconify.design/devicon/huggingface.svg" width="16" height="16" /> Backend: Hugging Face Spaces (Docker)
+- ![GitHub](https://api.iconify.design/mdi:github.svg?height=16) Frontend: [GitHub Pages](https://pages.github.com)
+- ![Hugging Face](https://api.iconify.design/devicon:huggingface.svg?height=16) Backend: [Hugging Face Spaces](https://huggingface.co/spaces) (Docker)
 
 ## Local Development
 
